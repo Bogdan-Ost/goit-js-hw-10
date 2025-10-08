@@ -6,73 +6,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>goit-js-hw-10</title>
     <script type="module" crossorigin src="/goit-js-hw-10/assets/styles-DD3qoKza.js"></script>
-    <script type="module" crossorigin src="/goit-js-hw-10/assets/1-timer-l0sNRNKZ.js"></script>
-    <script type="module" crossorigin src="/goit-js-hw-10/assets/2-snackbar-l0sNRNKZ.js"></script>
     <link rel="stylesheet" crossorigin href="/goit-js-hw-10/assets/styles-DvPDDfy5.css">
   </head>
   <body>
-    <main>
-      <!-- Loads the specified .html file -->
-      <load src="./partials/vite-promo.html"></load>
-      <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Time</title>
-  </head>
-  <body>
-    <main>
+    <header class="header">
       <div class="container">
-        <h1 class="main-title">Time</h1>
-        <a class="back-link" href="./index.html">Go back</a>
+        <nav class="nav">
+          <a class="nav-logo" href="./index.html" aria-label="Site logo">
+            <svg class="nav-logo-icon" width="100" height="30">
+              <use href="{=$icon-path}"></use>
+            </svg>
+          </a>
+          <ul class="nav-list">
+            <li class="nav-item">
+              <a class="nav-link {=$highlight-act}" href="./1-timer.html"
+                >Time</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {=$highlight-curr}" href="./2-snackbar.html"
+                >Snackbar</a
+              >
+            </li>
+          </ul>
+        </nav>
       </div>
-
-      <input type="text" id="datetime-picker" />
-      <button type="button" data-start>Start</button>
-
-      <div class="timer">
-        <div class="field">
-          <span class="value" data-days>00</span>
-          <span class="label">Days</span>
-        </div>
-        <div class="field">
-          <span class="value" data-hours>00</span>
-          <span class="label">Hours</span>
-        </div>
-        <div class="field">
-          <span class="value" data-minutes>00</span>
-          <span class="label">Minutes</span>
-        </div>
-        <div class="field">
-          <span class="value" data-seconds>00</span>
-          <span class="label">Seconds</span>
-        </div>
-      </div>
-    </main>
-  </body>
-</html>
-
-      <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Snackbar</title>
-  </head>
-  <body>
-    <main>
-      <div class="container">
-        <h1 class="main-title">Snackba</h1>
-        <a class="back-link" href="./index.html">Go back</a>
-      </div>
-    </main>
-  </body>
-</html>
-
-    </main>
+    </header>
+    <main></main>
 
   </body>
 </html>
