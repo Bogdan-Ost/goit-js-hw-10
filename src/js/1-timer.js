@@ -1,13 +1,19 @@
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 
+// // Описаний у документації
+// import iziToast from 'izitoast';
+// // Додатковий імпорт стилів
+// import 'izitoast/dist/css/iziToast.min.css';
+
 const input = document.querySelector('#datetime-picker');
 const startBtn = document.querySelector('button[data-start]');
 const timeDays = document.querySelector('span[data-days]');
 const timeHour = document.querySelector('span[data-hours]');
 const timeMinutes = document.querySelector('span[data-minutes]');
 const timeSeconds = document.querySelector('span[data-seconds]');
-console.log(timeValue);
+
+let userSelectedDate = 0;
 
 const options = {
   enableTime: true,
@@ -19,7 +25,7 @@ const options = {
   },
 };
 
-let userSelectedDate = flatpickr(input, options);
+flatpickr(input, options);
 
 function convertMs(ms) {
   // Number of milliseconds per unit of time
@@ -29,7 +35,7 @@ function convertMs(ms) {
   const day = hour * 24;
 
   // Remaining days
-  const days = Math.floor(ms / day);
+  const days = addLeadingZero(Math.floor(ms / day));
   // Remaining hours
   const hours = Math.floor((ms % day) / hour);
   // Remaining minutes
@@ -40,15 +46,18 @@ function convertMs(ms) {
   return { days, hours, minutes, seconds };
 }
 
-console.log(convertMs(2000)); // {days: 0, hours: 0, minutes: 0, seconds: 2}
-console.log(convertMs(140000)); // {days: 0, hours: 0, minutes: 2, seconds: 20}
-console.log(convertMs(24140000)); // {days: 0, hours: 6 minutes: 42, seconds: 20}
+// console.log(convertMs(2000)); // {days: 0, hours: 0, minutes: 0, seconds: 2}
+// console.log(convertMs(140000)); // {days: 0, hours: 0, minutes: 2, seconds: 20}
+// console.log(convertMs(24140000)); // {days: 0, hours: 6 minutes: 42, seconds: 20}
+
+startBtn.addEventListener('click', start);
 
 function start() {
-  const starTime = Date.now();
-
   setInterval(() => {
+    const starTime = Date.now();
     const deltaTime = userSelectedDate - starTime;
+    const time = convertMs(deltaTime);
+    updateClockface(time);
   }, 1000);
 }
 
@@ -57,4 +66,8 @@ function updateClockface({ days, hours, minutes, seconds }) {
   timeHour.innerHTML = `${hours}`;
   timeMinutes.innerHTML = `${minutes}`;
   timeSeconds.innerHTML = `${seconds}`;
+}
+
+function addLeadingZero(value) {
+  return String(value).padStart(2, '0');
 }
