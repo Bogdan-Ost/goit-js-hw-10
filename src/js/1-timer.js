@@ -1,10 +1,10 @@
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 
-// // Описаний у документації
-// import iziToast from 'izitoast';
-// // Додатковий імпорт стилів
-// import 'izitoast/dist/css/iziToast.min.css';
+// Описаний у документації
+import iziToast from 'izitoast';
+// Додатковий імпорт стилів
+import 'izitoast/dist/css/iziToast.min.css';
 
 const input = document.querySelector('#datetime-picker');
 const startBtn = document.querySelector('button[data-start]');
@@ -13,7 +13,7 @@ const timeHour = document.querySelector('span[data-hours]');
 const timeMinutes = document.querySelector('span[data-minutes]');
 const timeSeconds = document.querySelector('span[data-seconds]');
 
-let userSelectedDate = 0;
+let userSelectedDate;
 
 const options = {
   enableTime: true,
@@ -21,9 +21,27 @@ const options = {
   defaultDate: new Date(),
   minuteIncrement: 1,
   onClose(selectedDates) {
-    userSelectedDate = selectedDates;
+    userSelectedDate = selectedDates[0];
+    if (userSelectedDate <= options.defaultDate) {
+      iziToast.warning({
+        message: 'Please choose a date in the future',
+      });
+    } else {
+      startBtn.disabled = false;
+    }
   },
 };
+iziToast.settings({
+  timeout: 10000,
+  position: 'topRight',
+  color: 'red',
+  resetOnHover: true,
+  icon: 'material-icons',
+  transitionIn: 'flipInX',
+  transitionOut: 'flipOutX',
+});
+
+startBtn.disabled = true;
 
 flatpickr(input, options);
 
@@ -37,11 +55,13 @@ function convertMs(ms) {
   // Remaining days
   const days = addLeadingZero(Math.floor(ms / day));
   // Remaining hours
-  const hours = Math.floor((ms % day) / hour);
+  const hours = addLeadingZero(Math.floor((ms % day) / hour));
   // Remaining minutes
-  const minutes = Math.floor(((ms % day) % hour) / minute);
+  const minutes = addLeadingZero(Math.floor(((ms % day) % hour) / minute));
   // Remaining seconds
-  const seconds = Math.floor((((ms % day) % hour) % minute) / second);
+  const seconds = addLeadingZero(
+    Math.floor((((ms % day) % hour) % minute) / second)
+  );
 
   return { days, hours, minutes, seconds };
 }
@@ -53,11 +73,22 @@ function convertMs(ms) {
 startBtn.addEventListener('click', start);
 
 function start() {
-  setInterval(() => {
+  startBtn.disabled = true;
+  input.disabled = true;
+
+  const interval = setInterval(() => {
     const starTime = Date.now();
     const deltaTime = userSelectedDate - starTime;
     const time = convertMs(deltaTime);
     updateClockface(time);
+    if (deltaTime <= 0) {
+      input.disabled = false;
+      clearInterval(interval);
+      timeDays.innerHTML = `00`;
+      timeHour.innerHTML = `00`;
+      timeMinutes.innerHTML = `00`;
+      timeSeconds.innerHTML = `00`;
+    }
   }, 1000);
 }
 
