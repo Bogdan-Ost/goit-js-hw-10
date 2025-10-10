@@ -11,6 +11,7 @@ function createPromise(event) {
   event.preventDefault();
   const delay = event.target.elements.delay.value;
   const state = event.target.elements.state;
+  console.log(state.value);
 
   const prom = new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -25,30 +26,16 @@ function createPromise(event) {
     .then(date => {
       iziToast.info({
         message: `✅ Fulfilled promise in ${delay}ms`,
-      });
-      iziToast.settings({
-        timeout: 10000,
         position: 'topRight',
         color: 'green',
-        resetOnHover: true,
-        icon: 'material-icons',
-        transitionIn: 'flipInX',
-        transitionOut: 'flipOutX',
       });
       console.log(date);
     })
     .catch(error => {
       iziToast.info({
         message: `❌ Rejected promise in ${delay}ms`,
-      });
-      iziToast.settings({
-        timeout: 10000,
         position: 'topRight',
         color: 'red',
-        resetOnHover: true,
-        icon: 'material-icons',
-        transitionIn: 'flipInX',
-        transitionOut: 'flipOutX',
       });
       console.log(error);
     });
