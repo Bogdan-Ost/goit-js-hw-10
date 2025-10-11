@@ -10,12 +10,11 @@ form.addEventListener('submit', createPromise);
 function createPromise(event) {
   event.preventDefault();
   const delay = event.target.elements.delay.value;
-  const state = event.target.elements.state;
-  console.log(state.value);
+  const state = event.target.elements.state.value;
 
   const prom = new Promise((resolve, reject) => {
     setTimeout(() => {
-      if (state.value === 'fulfilled') {
+      if (state === 'fulfilled') {
         resolve(`✅ Fulfilled promise in ${delay}ms`);
       } else {
         reject(`❌ Rejected promise in ${delay}ms`);
@@ -39,5 +38,5 @@ function createPromise(event) {
       });
       console.log(error);
     });
-  event.currentTarget.reset();
+  // event.currentTarget.reset();
 }
