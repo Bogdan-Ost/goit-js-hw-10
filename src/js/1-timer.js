@@ -22,7 +22,7 @@ const options = {
   minuteIncrement: 1,
   onClose(selectedDates) {
     userSelectedDate = selectedDates[0];
-    if (userSelectedDate <= options.defaultDate) {
+    if (userSelectedDate <= new Date()) {
       iziToast.warning({
         message: 'Please choose a date in the future',
       });
@@ -84,10 +84,10 @@ function start() {
     if (deltaTime <= 0) {
       input.disabled = false;
       clearInterval(interval);
-      timeDays.innerHTML = `00`;
-      timeHour.innerHTML = `00`;
-      timeMinutes.innerHTML = `00`;
-      timeSeconds.innerHTML = `00`;
+      timeDays.textContent = `00`;
+      timeHour.textContent = `00`;
+      timeMinutes.textContent = `00`;
+      timeSeconds.textContent = `00`;
     }
   }, 1000);
 }
