@@ -23,6 +23,7 @@ const options = {
   onClose(selectedDates) {
     userSelectedDate = selectedDates[0];
     if (userSelectedDate <= new Date()) {
+      startBtn.disabled = true;
       iziToast.warning({
         message: 'Please choose a date in the future',
       });
@@ -77,9 +78,10 @@ function start() {
   input.disabled = true;
 
   const interval = setInterval(() => {
-    const starTime = Date.now();
-    const deltaTime = userSelectedDate - starTime;
+    const startTime = Date.now();
+    const deltaTime = userSelectedDate - startTime;
     const time = convertMs(deltaTime);
+
     updateClockface(time);
     if (deltaTime <= 0) {
       input.disabled = false;
